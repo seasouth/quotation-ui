@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@mui/material/Paper';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,45 +11,35 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { QuotationsListRow } from './QuotationsListRow'
 
-const QuotationsTable = (props) => {
-    // Show loading message
-    if (props.loading) return <p>Quotation table is loading...</p>
+const QuotationsTable = ({
+    quotations,
+    loading
+}) => {
+    useEffect(() => {
+        console.log(quotations);
+    }, [quotations]);
+
+    if (loading) return <p>Quotation table is loading...</p>
 
     const columns = [
-        {label: 'ID', width: 40},
-        {label: 'Author', width: 100},
-        {label: 'Quote', width: 400},
-        {label: 'Source', width: 100},
-        {label: 'Year', width: 80},
+        {
+            field: 'authorName', headerName: 'Author Name',
+            valueGetter: (i) => `${i.row.authorFirst || ''} ${i.row.authorLast || ''}`,
+            width: 200
+        },
+        {field: 'quotation',  headerName: 'Quote', width: 10000}
     ]
 
     return (
         <Paper sx={{ width: '80%', overflow: 'hidden', height: '80%'}}>
-            <TableContainer>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((col) => (
-                                <TableCell
-                                    key={col.label}
-                                    align={'left'}
-                                    style={{ minWidth: col.width }}
-                                >
-                                    {col.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.quotations.map((quote) => (
-                            <QuotationsListRow
-                                key={quote.id}
-                                quote={quote}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Box>
+                <DataGrid
+                    rows={quotations}
+                    columns={columns}
+                    autoHeight={true}
+                    getRowId={(row) => row.ID}
+                />
+            </Box>
         </Paper>
     )
 }

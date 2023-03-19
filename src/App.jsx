@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Quotation from './components/Quotation';
 import RandomQuote from './components/RandomQuote';
-import QuoteOfTheDay from './components/QuoteOfTheDay';
 import QuotationsTable from './components/QuotationsTable'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,8 +36,7 @@ const App = () => {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <QuoteOfTheDay quotations={quotations} />
-            <RandomQuote />
+            <RandomQuote quotations={quotations} />
             <div className="quotation-table">
                 <QuotationsTable quotations={quotations} loading={loading} />
             </div>
