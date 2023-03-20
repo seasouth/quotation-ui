@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react'
-import Paper from '@mui/material/Paper';
+import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { QuotationsListRow } from './QuotationsListRow'
 
 const QuotationsTable = ({
     quotations,
-    loading
+    loading,
+    setSelectedQuotation
 }) => {
-    useEffect(() => {
-        console.log(quotations);
-    }, [quotations]);
+    const handleRowSelection = (rowID) => {
+        console.log(rowID);
+        const matchedRows = quotations.filter((quote) => quote.ID === rowID[0]);
+        console.log(matchedRows);
+        if (matchedRows.length == 1 && setSelectedQuotation) {
+            setSelectedQuotation(matchedRows[0]);
+        }
+    }
 
     if (loading) return <p>Quotation table is loading...</p>
 
@@ -27,20 +23,27 @@ const QuotationsTable = ({
             valueGetter: (i) => `${i.row.authorFirst || ''} ${i.row.authorLast || ''}`,
             width: 200
         },
-        {field: 'quotation',  headerName: 'Quote', width: 10000}
+        {
+            field: 'quotation',  
+            headerName: 'Quote', 
+            width: 800
+        }
     ]
 
     return (
-        <Paper sx={{ width: '80%', overflow: 'hidden', height: '80%'}}>
-            <Box>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{height: 500, width: 'auto', margin: '1.5rem' }}>
                 <DataGrid
                     rows={quotations}
                     columns={columns}
-                    autoHeight={true}
                     getRowId={(row) => row.ID}
+                    autoPageSize
+                    onRowSelectionModelChange={(selectedRow) => {
+                        handleRowSelection(selectedRow)
+                    }}
                 />
-            </Box>
-        </Paper>
+            </div>
+        </div>
     )
 }
 

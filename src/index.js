@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { Quotation } from './components/Quotation'
 import reportWebVitals from './reportWebVitals';
 import './styles/styles.css'
 

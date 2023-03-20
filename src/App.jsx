@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Quotation from './components/Quotation';
 import RandomQuote from './components/RandomQuote';
 import QuotationsTable from './components/QuotationsTable'
+import QuotationDetails from './components/QuotationDetails';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -14,6 +14,7 @@ const darkTheme = createTheme({
 
 const App = () => {
     const [quotations, setQuotations] = useState([]);
+    const [selectedQuotation, setSelectedQuotation] = useState({});
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -37,9 +38,14 @@ const App = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <RandomQuote quotations={quotations} />
-            <div className="quotation-table">
-                <QuotationsTable quotations={quotations} loading={loading} />
-            </div>
+            <QuotationsTable 
+                quotations={quotations} 
+                loading={loading}
+                setSelectedQuotation={setSelectedQuotation}
+            />
+            <QuotationDetails 
+                selectedQuotation={selectedQuotation}
+            />
         </ThemeProvider>
     )
 }

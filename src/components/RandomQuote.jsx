@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Card, CardActions, CardActionArea, CardContent, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 
 const RandomQuote = ({quotations}) => {
     const [randomQuote, setRandomQuote] = useState({});
