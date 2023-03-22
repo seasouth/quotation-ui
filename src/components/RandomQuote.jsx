@@ -43,11 +43,14 @@ const RandomQuote = ({quotations}) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button
-                    onClick={getNewQuote}
-                >
-                    Get new quote
-                </Button>
+                <div style={{display: 'flex', justifyContent: 'right', marginTop: '0.5rem'}}>
+                    <Button
+                        variant="outlined"
+                        onClick={getNewQuote}
+                    >
+                        Get new quote
+                    </Button>
+                </div>
             </CardActions>
         </Card>
     )

@@ -14,4 +14,30 @@ exports.quotationsAll = async (req, res) => {
         // Send a error message in response
         res.json({ message: `There was an error retrieving quotations: ${err}` })
       })
-  }
+}
+
+exports.addNewQuote = async (req, res) => {
+  // Add new quote to database
+  knex('quotes')
+    .insert({ // insert new record
+      'ID': req.body.ID,
+      'quotation': req.body.quotation,
+      'authorFirst': req.body.authorFirst,
+      'authorMiddle': req.body.authorMiddle,
+      'authorLast': req.body.authorLast,
+      'context': req.body.context,
+      'notes': req.body.notes,
+      'quoteSource': req.body.quoteSource,
+      'quoteYear': req.body.quoteYear,
+      'title': req.body.title,
+      'usedDate': req.body.usedDate
+    })
+    .then(() => {
+      // Send a success message in response
+      res.json({ message: `Quote \'${req.body.quotation}\' created.` })
+    })
+    .catch(err => {
+      // Send a error message in response
+      res.json({ message: `There was an error creating ${req.body.title} quote: ${err}` })
+    })
+}

@@ -12,5 +12,7 @@ const router = express.Router();
 // this means that '/all' translates to '/quotations/all'
 router.get('/all', quotationsRoutes.quotationsAll);
 
+router.post('/create', quotationsRoutes.addNewQuote);
+
 // Export router
 module.exports = router
