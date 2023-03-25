@@ -27,13 +27,19 @@ const QuotationDetails = ({
                         </Typography>
                         <Item>{selectedQuotation.quotation}</Item>
                     </Grid>
+                    <Grid item xs={1}>
+                        <Typography variant="h6" gutterBottom>
+                            Title
+                        </Typography>
+                        <Item>{selectedQuotation.title}</Item>
+                    </Grid>
                     <Grid item xs={4}>
                         <Typography variant="h6" gutterBottom>
                             Author First
                         </Typography>
                         <Item>{selectedQuotation.authorFirst}</Item>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <Typography variant="h6" gutterBottom>
                             Author Middle
                         </Typography>
@@ -69,17 +75,17 @@ const QuotationDetails = ({
                         </Typography>
                         <Item>{selectedQuotation.notes}</Item>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
+                        <Typography variant="h6" gutterBottom>
+                            Used Date
+                        </Typography>
+                        <Item>{selectedQuotation.usedDate}</Item>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Typography variant="h6" gutterBottom>
                             ID
                         </Typography>
                         <Item>{selectedQuotation.ID}</Item>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="h6" gutterBottom>
-                            Title
-                        </Typography>
-                        <Item>{selectedQuotation.title}</Item>
                     </Grid>
                 </Grid>
             </Box>

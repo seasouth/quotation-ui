@@ -31,7 +31,7 @@ const App = () => {
 
             setLoading(false)
             })
-            .catch(error => console.error(`There was an error retrieving the book list: ${error}`))
+            .catch(error => console.error(`There was an error retrieving the quotations list: ${error}`))
     }
 
     return (

@@ -76,7 +76,7 @@ const QuotationsTable = ({
                 });
                 setOpen(false);
             })
-            .catch(error => console.error(`There was an error retrieving the book list: ${error}`))
+            .catch(error => console.error(`There was an error retrieving the quote list: ${error}`))
     }
 
     if (loading) return <p>Quotation table is loading...</p>
