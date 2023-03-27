@@ -41,3 +41,28 @@ exports.addNewQuote = async (req, res) => {
       res.json({ message: `There was an error creating ${req.body.title} quote: ${err}` })
     })
 }
+
+exports.deleteQuote = async (req, res) => {
+  knex('quotes')
+    .where('ID', req.body.ID)
+    .del()
+    .then(() => {
+      res.json({ message: 'Quote deleted.' })
+    })
+    .catch(err => {
+      // Send a error message in response
+      res.json({ message: 'There was an error deleting this quote: ' + err })
+    })
+}
+
+exports.updateQuote = async (req, res) => {
+  knex('quotes')
+    .where('ID', req.body.ID)
+    .update(req.body)
+    .then(() => {
+      res.json({ message: 'Quote updated.' })
+    })
+    .catch(err => {
+      res.json({ message: 'There was an error updating this quote: ' + err })
+    })
+}

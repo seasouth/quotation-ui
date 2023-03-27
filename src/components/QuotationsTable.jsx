@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { 
@@ -9,58 +9,56 @@ import {
     DialogContent,
     DialogTitle, 
     Grid,
-    Paper,
-    styled,
-    TextField,
-    Typography
+    TextField
 } from '@mui/material';
 
+const initialState = { 
+    quotation: "",
+    authorFirst: "",
+    authorMiddle: "",
+    authorLast: "",
+    context: "",
+    notes: "",
+    quoteSource: "",
+    quoteYear: "",
+    title: "",
+    usedDate: "",
+    ID: 0
+}
 
 const QuotationsTable = ({
     quotations,
     loading,
-    setSelectedQuotation
+    setSelectedQuotation,
+    selectedQuotation
 }) => {
     const [open, setOpen] = useState(false);
-    const [newQuote, setNewQuote] = useState({ 
-        quotation: "",
-        authorFirst: "",
-        authorMiddle: "",
-        authorLast: "",
-        context: "",
-        notes: "",
-        quoteSource: "",
-        quoteYear: "",
-        title: "",
-        usedDate: "",
-        ID: 0
-    });
+    const [newQuote, setNewQuote] = useState(initialState);
+
+    useEffect(() => {
+        if (newQuote.ID !== 0) {
+            saveQuote();
+        }
+    }, [newQuote.ID]);
 
     const handleRowSelection = (rowID) => {
-        console.log(rowID);
         const matchedRows = quotations.filter((quote) => quote.ID === rowID[0]);
-        console.log(matchedRows);
         if (matchedRows.length === 1 && setSelectedQuotation) {
             setSelectedQuotation(matchedRows[0]);
         }
     }
 
     const handleOnSubmit = () => {
-        console.log(newQuote);
-        console.log(quotations[quotations.length - 1]);
-        console.log(quotations[quotations.length - 1].ID);
         setNewQuote(prevState => ({
             ...prevState, 
             ID: quotations[quotations.length - 1].ID + 1
         }));
-        saveQuote();
     }
 
     const saveQuote = async () => {
         axios
             .post('http://localhost:4001/quotations/create', newQuote)
             .then(response => {
-                console.log(response);
                 setNewQuote({ 
                     quotation: "",
                     authorFirst: "",
@@ -79,12 +77,26 @@ const QuotationsTable = ({
             .catch(error => console.error(`There was an error retrieving the quote list: ${error}`))
     }
 
+    const deleteQuotation = async () => {
+        axios
+            .put('http://localhost:4001/quotations/delete', selectedQuotation)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => console.error(`There was an error deleting the selected quotation: ${error}`))
+    }
+
     if (loading) return <p>Quotation table is loading...</p>
 
     const columns = [
         {
+            field: 'ID', 
+            headerName: 'ID',
+            width: 100
+        },
+        {
             field: 'authorName', headerName: 'Author Name',
-            valueGetter: (i) => `${i.row.authorFirst || ''} ${i.row.authorLast || ''}`,
+            valueGetter: (i) => `${i.row.authorFirst || ''} ${i.row.authorMiddle || ''} ${i.row.authorLast || ''}`,
             width: 200
         },
         {
@@ -108,6 +120,15 @@ const QuotationsTable = ({
                         }}
                     />
                     <div style={{display: 'flex', justifyContent: 'right', marginTop: '0.5rem'}}>
+                        {
+                        <Button
+                            variant="outlined"
+                            color="warning"
+                            onClick={() => deleteQuotation()}
+                            sx={{marginRight: '4px'}}
+                        >
+                            Delete Selected Quote
+                        </Button>}
                         <Button
                             variant="outlined"
                             onClick={() => setOpen(true)}
@@ -170,7 +191,7 @@ const QuotationsTable = ({
                                                 }))}
                                             />
                                         </Grid>
-                                        <Grid item xs={8}>
+                                        <Grid item xs={4}>
                                             <TextField
                                                 id="quotationSource"
                                                 label="Source"
@@ -192,6 +213,18 @@ const QuotationsTable = ({
                                                 onChange={(e) => setNewQuote(prevState => ({
                                                     ...prevState, 
                                                     quoteYear: e.target.value
+                                                }))}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <TextField
+                                                id="usedDate"
+                                                label="Used Date"
+                                                variant="outlined"
+                                                value={newQuote.usedDate}
+                                                onChange={(e) => setNewQuote(prevState => ({
+                                                    ...prevState, 
+                                                    usedDate: e.target.value
                                                 }))}
                                             />
                                         </Grid>

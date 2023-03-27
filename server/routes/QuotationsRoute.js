@@ -14,5 +14,9 @@ router.get('/all', quotationsRoutes.quotationsAll);
 
 router.post('/create', quotationsRoutes.addNewQuote);
 
+router.put('/delete', quotationsRoutes.deleteQuote);
+
+router.put('/update',quotationsRoutes.updateQuote);
+
 // Export router
 module.exports = router

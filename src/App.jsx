@@ -12,9 +12,23 @@ const darkTheme = createTheme({
     },
 });
 
+const initialState = { 
+    quotation: "",
+    authorFirst: "",
+    authorMiddle: "",
+    authorLast: "",
+    context: "",
+    notes: "",
+    quoteSource: "",
+    quoteYear: "",
+    title: "",
+    usedDate: "",
+    ID: 0
+}
+
 const App = () => {
     const [quotations, setQuotations] = useState([]);
-    const [selectedQuotation, setSelectedQuotation] = useState({});
+    const [selectedQuotation, setSelectedQuotation] = useState(initialState);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -41,6 +55,7 @@ const App = () => {
             <QuotationsTable 
                 quotations={quotations} 
                 loading={loading}
+                selectedQuotation={selectedQuotation}
                 setSelectedQuotation={setSelectedQuotation}
             />
             <QuotationDetails 
