@@ -13,16 +13,16 @@ const darkTheme = createTheme({
 });
 
 const initialState = { 
-    quotation: "",
-    authorFirst: "",
-    authorMiddle: "",
-    authorLast: "",
-    context: "",
-    notes: "",
-    quoteSource: "",
-    quoteYear: "",
-    title: "",
-    usedDate: "",
+    quotation: null,
+    authorFirst: null,
+    authorMiddle: null,
+    authorLast: null,
+    context: null,
+    notes: null,
+    quoteSource: null,
+    quoteYear: null,
+    title: null,
+    usedDate: null,
     ID: 0
 }
 
